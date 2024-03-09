@@ -2,4 +2,4 @@ SendMail/smtp-args.json
 InstaFollowers/templates/args.json
 InstaFollowers/users/*
 !InstaFollowers/users/sample
-InstaFollowers/__py__cache/
+InstaFollowers/__py__cache/*
