@@ -1,3 +1,4 @@
 SendMail/smtp-args.json
-InstaFollowers/insta-creds.json
-InstaFollowers/smtp-args.json
+InstaFollowers/templates/args.json
+InstaFollowers/users/*
+!InstaFollowers/users/sample
