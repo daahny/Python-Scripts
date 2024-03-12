@@ -43,7 +43,7 @@ class IGMail:
 
 
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = 'Losers on Instagram'
+        msg['Subject'] = 'Instagram Followers Update'
         msg['From'] = self.smtp_from
         msg['To'] = self.smtp_to
         text = 'Users not following you back:\n'
