@@ -24,6 +24,7 @@ if os.path.exists(path):
     exit(0)
 else:
     os.mkdir(path)
+    print(f'Created user directory in {path}')
 
 
 with open(f'{path}/{target_user}_args.json', 'w') as args_file:

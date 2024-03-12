@@ -1,10 +1,16 @@
+# igmail.py
+
+
+
 import smtplib
 import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-class InstaMail:
+
+class IGMail:
+
 
 
     def __init__(self, smtp_from, smtp_to, smtp_server, smtp_port, smtp_username, smtp_password):
@@ -14,6 +20,7 @@ class InstaMail:
         self.smtp_port = smtp_port
         self.smtp_username = smtp_username
         self.smtp_password = smtp_password
+
 
 
     EMOJIS = [
@@ -30,8 +37,8 @@ class InstaMail:
     ]
 
 
-# Build out email message
-    def build_email(self, lost_followers: set, new_followers: set, last_ran: str) -> MIMEMultipart:
+
+    def build_email(self, lost_followers: set, new_followers: set, one_way_set: set, last_ran: str) -> MIMEMultipart:
         '''Build and return MIME compliant message'''
 
 
@@ -53,8 +60,13 @@ class InstaMail:
             cool_people += f'<li>&#128526{new}&#128526</li>\n'
 
 
+        one_way = ''
+        for one in one_way_set:
+            one_way += f'<li>{random.choice(self.EMOJIS)}{one}{random.choice(self.EMOJIS)}</li>\n'
+
+
         with open(r'templates/email.html', 'r') as email:
-            html = email.read().format(losers=losers, cool_people=cool_people, last_ran=last_ran)
+            html = email.read().format(losers=losers, cool_people=cool_people, one_way=one_way, last_ran=last_ran)
 
 
         msg.attach(MIMEText(text, 'plain'))
@@ -64,9 +76,9 @@ class InstaMail:
         return msg
 
 
-    # Send email
+
     def send(self, msg: MIMEMultipart):
-        '''Send an email'''
+        '''Send followers update email'''
 
 
         smtp_connection = smtplib.SMTP(self.smtp_server, self.smtp_port)
@@ -77,3 +89,5 @@ class InstaMail:
 
         smtp_connection.login(self.smtp_username, self.smtp_password) 
         smtp_connection.sendmail(self.smtp_from, self.smtp_to, msg.as_string())
+
+        print(f'Sent email to {self.smtp_to}')

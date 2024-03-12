@@ -1,5 +1,4 @@
 SendMail/smtp-args.json
-InstaFollowers/templates/args.json
-InstaFollowers/users/*
-!InstaFollowers/users/sample
-InstaFollowers/__pycache__/*
+IG-Tracker/users/*
+!IG-Tracker/users/bob
+IG-Tracker/__pycache__/*

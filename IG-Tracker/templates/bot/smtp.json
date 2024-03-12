@@ -1,0 +1,7 @@
+{
+    "smtp_from": "smtp@from.com",
+    "smtp_password": "smtp@to.com",
+    "smtp_port": "25",
+    "smtp_server": "smtp-server.example.com",
+    "smtp_username": "smtp@from.com"
+}

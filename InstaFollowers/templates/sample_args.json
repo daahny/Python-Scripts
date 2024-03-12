@@ -1,9 +1,0 @@
-{
-    "insta_user": "bot-account",
-    "insta_password": "bot-password",
-    "smtp_from": "Apollo-Bot@outlook.com",
-    "smtp_server": "smtp.example.com",
-    "smtp_port": "smtp-port",
-    "smtp_username": "smtp-from-email",
-    "smtp_password": "smtp-password"
-}
