@@ -56,6 +56,8 @@ def parse_user_data(username: str) -> str:
 def parse_bot_data(username: str) -> tuple[instaloader.instaloadercontext, IGMail]:
     '''Parse bot data like credentials and SMTP arguments'''
     
+    print('Parsing bot SMTP and IG arguments')
+
     with open(f'{running_dir}/users/bot/smtp.json', 'r') as smtp:
         args = json.load(smtp)
         smtp_from = args['smtp_from']
@@ -82,8 +84,16 @@ def parse_bot_data(username: str) -> tuple[instaloader.instaloadercontext, IGMai
 def log_into_instagram(user: str, password: str) -> instaloader.instaloadercontext:
     '''Log into instagram and return instaloader context'''
     
-    insta = instaloader.Instaloader(max_connection_attempts=1)
-    insta.login(user, password)
+
+    print(f'Logging into instagram with bot account')
+    try:
+        insta = instaloader.Instaloader(max_connection_attempts=1)
+        insta.login(user, password)
+    except instaloader.QueryReturnedBadRequestException:
+        print('Error - Received bad request attempt notification')
+        print('Check your bot account\'s standing in instagram.')
+        print('Exiting script')
+        exit(0)
     return insta.context
 
     # Loading a session seems to return http/401 when working with more than 1 IG user
@@ -112,6 +122,7 @@ def set_insta_mail(smtp_from: str, smtp_to: str, smtp_server: str, smtp_port: st
 def set_ig_user(username: str, context: instaloader.instaloadercontext) -> IGUser:
     '''Instantiate IGUser object. Raises PrivateProfileNotFollowedException if account is not followed by bot.'''
 
+    print('Retrieving IG user data.')
     try:
         return IGUser(
                 target_user=username,
@@ -160,6 +171,8 @@ def iterate_users(users: list):
     '''Iterate through users and compare follows'''
 
     for username in users:
+
+        print(f'Running igtracker for {username}')
         
         # Get IG context and mail object
         context, mail = parse_bot_data(username)
@@ -170,6 +183,7 @@ def iterate_users(users: list):
 
 
         # Check if user's followers list exists
+        print('Checking if user\'s followers file has followers')
         if check_first_time(user, username):
             continue
 
@@ -184,6 +198,8 @@ def iterate_users(users: list):
         new_followers = set()
         one_way = set()
 
+
+        print('Comparing followers to old followers')
         for follower in user.followers:
             if follower not in old_followers:
                 new_followers.add(follower)
@@ -195,6 +211,7 @@ def iterate_users(users: list):
                 one_way.add(following.username)
 
 
+        print('Updating user\'s followers file with new followers')
         # Update followers file with actual followers
         user.update_followers_file(old_followers.union(new_followers))
 
