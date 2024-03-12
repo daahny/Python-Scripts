@@ -1,4 +1,4 @@
 SendMail/smtp-args.json
-IG-Tracker/users/*
-!IG-Tracker/users/bob
-IG-Tracker/__pycache__/*
+IGTracker/users/*
+!IGTracker/users/bob
+IGTracker/__pycache__/*
