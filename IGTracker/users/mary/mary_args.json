@@ -1,0 +1,4 @@
+{
+    "smtp_to": "mary@example.com",
+    "target_user": "mary"
+}
