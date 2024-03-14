@@ -224,8 +224,6 @@ def iterate_users(users: list):
 
         
 
-
-
 def main():
     '''Main function'''
     

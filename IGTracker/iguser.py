@@ -34,8 +34,15 @@ class IGUser:
         '''Set user's instaloader profile object'''
         try:
             self._target_profile = instaloader.Profile.from_username(self.context, username)
-        except instaloader.ProfileNotExistsException:
+        except instaloader.exceptions.ProfileNotExistsException:
             print(f'Error: could not find user \'{username}\'')
+            print('Exiting script')
+            exit(0)
+        except instaloader.exceptions.QueryReturnedBadRequestException:
+            print('Error: received HTTP/400 - Bad Request from server')
+            print('Make sure your Instagram bot account is in good standing')
+            print('Exiting script')
+            exit(0)
 
 
 
